@@ -1,5 +1,5 @@
 "use strict";
-
+// LINK TO Rev-UP Client Questionaire API
 //  FORM LOADING
 //  1. ADD OPTIONS TO DROP DOWN
 //  2. ADDS EVENTS TO BUTTONS AND CHECKBOXES(CHECK)
@@ -217,7 +217,7 @@ const submitResponse = async () => {
 
     formData.append("data", JSON.stringify(revUpQuestionaire));
 
-    const url = `https://script.google.com/macros/s/AKfycbzeksEOrAwFn59ew0Ai6HYmUUXAwAFcDbwqG0XJorcOVGiPuB6pdns0IkNdvp2i3OEodQ/exec`;
+    const url = `https://script.google.com/macros/s/AKfycbybdjsILWYeraipBcvOc_oBUORNRCi3O6R05jp7G58leGVy7UvQOWMBqhPSKMkCmD_9/exec`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,

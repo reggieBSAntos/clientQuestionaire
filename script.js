@@ -109,93 +109,97 @@ const getNewResponse = () => {
   });
 };
 
-const loadData = () => {
-  let parts = Array.from(document.querySelectorAll(".part")).slice(1);
+const loadData = async () => {
+  try {
+    let parts = Array.from(document.querySelectorAll(".part")).slice(1);
 
-  // RENDER UI FIRST
-  // THERE COULD BE MULTIPLE INPUTS IN EACH QUESTIONS -> EMPLOYERS, EDUCATION, LICENSES
-  // BY DEAFUALT ONLY ONE INPUTS PER QUESTION
-  parts.forEach((part, partIndex) => {
-    const objPart = revUpQuestionaire[partIndex];
+    // RENDER UI FIRST
+    // THERE COULD BE MULTIPLE INPUTS IN EACH QUESTIONS -> EMPLOYERS, EDUCATION, LICENSES
+    // BY DEAFUALT ONLY ONE INPUTS PER QUESTION
+    parts.forEach((part, partIndex) => {
+      const objPart = revUpQuestionaire[partIndex];
 
-    Array.from(part.querySelectorAll(".question")).forEach(
-      (question, questionIndex) => {
-        const objQuestion = objPart.questions[questionIndex];
+      Array.from(part.querySelectorAll(".question")).forEach(
+        (question, questionIndex) => {
+          const objQuestion = objPart.questions[questionIndex];
 
-        if (objQuestion.inputs.length > 1) {
-          const question = document
-            .querySelectorAll(".part")
-            [partIndex + 1].querySelectorAll(".question")[questionIndex];
+          if (objQuestion.inputs.length > 1) {
+            const question = document
+              .querySelectorAll(".part")
+              [partIndex + 1].querySelectorAll(".question")[questionIndex];
 
-          const buttonAdd = question.querySelector(":scope > .buttons");
-          const input = question.querySelector(":scope > .inputs");
-          // ADD BUTTON IS DISABLED BY DEFAULT, ENABLE IF MORE THAN ONE INPUTS
-          const buttonRemove = input.querySelector(".button__remove");
-          buttonRemove.disabled = false;
+            const buttonAdd = question.querySelector(":scope > .buttons");
+            const input = question.querySelector(":scope > .inputs");
+            // ADD BUTTON IS DISABLED BY DEFAULT, ENABLE IF MORE THAN ONE INPUTS
+            const buttonRemove = input.querySelector(".button__remove");
+            buttonRemove.disabled = false;
 
-          for (let i = 2; i <= objQuestion.inputs.length; i++) {
-            buttonAdd.insertAdjacentElement(
-              "beforebegin",
-              input.cloneNode(true)
-            );
+            for (let i = 2; i <= objQuestion.inputs.length; i++) {
+              buttonAdd.insertAdjacentElement(
+                "beforebegin",
+                input.cloneNode(true)
+              );
+            }
           }
         }
-      }
-    );
-  });
+      );
+    });
 
-  // REQUERY UPDATED UI
-  parts = Array.from(document.querySelectorAll(".part")).slice(1);
+    // REQUERY UPDATED UI
+    parts = Array.from(document.querySelectorAll(".part")).slice(1);
 
-  parts.forEach((part, partIndex) => {
-    const objPart = revUpQuestionaire[partIndex];
+    parts.forEach((part, partIndex) => {
+      const objPart = revUpQuestionaire[partIndex];
 
-    Array.from(part.querySelectorAll(".question")).forEach(
-      (question, questionIndex) => {
-        const objQuestion = objPart.questions[questionIndex];
+      Array.from(part.querySelectorAll(".question")).forEach(
+        (question, questionIndex) => {
+          const objQuestion = objPart.questions[questionIndex];
 
-        Array.from(question.querySelectorAll(":scope > .inputs")).forEach(
-          (input, inputIndex) => {
-            const objInput = objQuestion.inputs[inputIndex];
+          Array.from(question.querySelectorAll(":scope > .inputs")).forEach(
+            (input, inputIndex) => {
+              const objInput = objQuestion.inputs[inputIndex];
 
-            Array.from(
-              input.querySelectorAll(":scope > div:not(.buttons)")
-            ).forEach((div, divIndex) => {
-              const objDiv = objInput.response[divIndex];
+              Array.from(
+                input.querySelectorAll(":scope > div:not(.buttons)")
+              ).forEach((div, divIndex) => {
+                const objDiv = objInput.response[divIndex];
 
-              if (div.classList.contains("sub-question")) {
-                Array.from(
-                  div.querySelectorAll("input, textarea, select")
-                ).forEach((ist, istIndex) => {
-                  const objInput = objDiv.answer[istIndex];
+                if (div.classList.contains("sub-question")) {
+                  Array.from(
+                    div.querySelectorAll("input, textarea, select")
+                  ).forEach((ist, istIndex) => {
+                    const objInput = objDiv.answer[istIndex];
 
-                  if (ist.type === "checkbox") {
-                    ist.checked = objInput.answer;
-                  } else {
-                    ist.value = objInput.answer;
-                  }
+                    if (ist.type === "checkbox") {
+                      ist.checked = objInput.answer;
+                    } else {
+                      ist.value = objInput.answer;
+                    }
 
-                  if (ist.type === "selectone" && objInput.answer === "")
-                    ist.options[0].selected = true;
-                });
-              } else {
-                if (!div.classList.contains("buttons")) {
-                  const objDiv = objInput.response[divIndex];
-                  const ist = div.querySelector("input, textarea, select");
+                    if (ist.type === "selectone" && objInput.answer === "")
+                      ist.options[0].selected = true;
+                  });
+                } else {
+                  if (!div.classList.contains("buttons")) {
+                    const objDiv = objInput.response[divIndex];
+                    const ist = div.querySelector("input, textarea, select");
 
-                  if (ist.type === "checkbox") {
-                    ist.checked = objDiv.answer;
-                  } else {
-                    ist.value = objDiv.answer;
+                    if (ist.type === "checkbox") {
+                      ist.checked = objDiv.answer;
+                    } else {
+                      ist.value = objDiv.answer;
+                    }
                   }
                 }
-              }
-            });
-          }
-        );
-      }
-    );
-  });
+              });
+            }
+          );
+        }
+      );
+    });
+  } catch (err) {
+    localStorage.clear();
+  }
 };
 
 // const getPosition = async () => {
@@ -224,9 +228,15 @@ const submitResponse = async () => {
     });
 
     const content = await response.json();
-    console.log(content);
+
+    if (content.result !== "succes")
+      throw new Error("Something went wrong. Please try again later");
+
+    window.alert(
+      "We have received your responses. We'll email or call you for clarifications"
+    );
   } catch (err) {
-    console.log(err.message);
+    window.alert(err.message);
   } finally {
     button.classList.remove("button--loading");
     button.disabled = false;
@@ -298,7 +308,7 @@ const initForm = () => {
     // CHANGE VALUE TO DEFAULT
 
     // DISABLE END DATE OPTIONS
-    if (e.target.closest(".isCurrentEmployer")) {
+    if (e.target.closest(".currentemployer") || e.target.closest(".enrolled")) {
       const isChecked = e.target
         .closest(".checkbox")
         .querySelector("input").checked;
@@ -400,9 +410,7 @@ const initForm = () => {
     }
 
     if (e.target.closest(".button__submit")) {
-      console.log(validateInputs());
-
-      if (validateInputs() !== 0) {
+      if (validateInputs() === 0) {
         window.alert("Please fill-out all required fields");
         return;
       }
@@ -439,8 +447,8 @@ const initForm = () => {
         return;
       }
 
-      if (dataId === "mobileNumber") {
-        format = /(^0[1-9]{3})(\d{3})(\d{3}$)/;
+      /* if (dataId === "mobileNumber") {
+        format = /(^0\d{3})(\d{3})(\d{3}$)/;
 
         if (format.test(trimValue(el.value))) {
           el.classList.remove("input--error");
@@ -450,6 +458,17 @@ const initForm = () => {
           el.classList.add("input--error");
         }
         return;
+      } */
+
+      if (dataId === "function2") {
+        format = /^.{3,}/;
+
+        if (format.test(trimValue(el.value))) {
+          el.classList.remove("input--error");
+        } else {
+          window.alert("Please list at list 1 function");
+          el.classList.add("input--error");
+        }
       }
 
       if (dataId === "industryExperience" || dataId === "jobExperience") {
@@ -499,3 +518,4 @@ const initForm = () => {
 };
 
 document.addEventListener("DOMContentLoaded", initForm);
+// const { latitude: lat, longitude: lng } = position.coords;

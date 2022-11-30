@@ -499,4 +499,3 @@ const initForm = () => {
 };
 
 document.addEventListener("DOMContentLoaded", initForm);
-// const { latitude: lat, longitude: lng } = position.coords;

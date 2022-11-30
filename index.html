@@ -23,6 +23,7 @@
 
     <link rel="stylesheet" href="stylesheet.css" />
     <script defer src="script.js"></script>
+    <script defer src="schema.js"></script>
     <title>Document</title>
   </head>
   <body>
@@ -138,7 +139,6 @@
                     class="inputs__input medium"
                     data-id="address2"
                     placeholder="Address Line 2"
-                    required
                   />
                   <div class="inputs__note medium"></div>
                 </div>
@@ -185,7 +185,7 @@
                   <input
                     class="inputs__input medium"
                     data-id="mobileNumber"
-                    placeholder="Mobile number (0### ### ###)"
+                    placeholder="Mobile number"
                     required
                   />
                   <div class="inputs__note">
@@ -462,7 +462,7 @@
                     Is the above company your current employer? Yes
                     <input
                       type="checkbox"
-                      class="checkbox__input isCurrentEmployer"
+                      class="checkbox__input currentemployer"
                       data-id="isCurrentEmployer"
                       id="checkbox1"
                     />
@@ -597,7 +597,6 @@
                         placeholder="Activity/ function 2"
                         data-id="function2"
                         rows="1"
-                        required
                       ></textarea>
                       <div class="inputs__note"></div>
                     </div>
@@ -608,7 +607,6 @@
                         placeholder="Activity/ function 3"
                         data-id="function3"
                         rows="1"
-                        required
                       ></textarea>
                       <div class="inputs__note"></div>
                     </div>
@@ -619,7 +617,6 @@
                         placeholder="Activity/ function 4"
                         data-id="function4"
                         rows="1"
-                        required
                       ></textarea>
                       <div class="inputs__note"></div>
                     </div>
@@ -630,7 +627,6 @@
                         placeholder="Activity/ function 5"
                         data-id="function5"
                         rows="1"
-                        required
                       ></textarea>
                       <div class="inputs__note"></div>
                     </div>
@@ -779,6 +775,20 @@
                       class="checkbox__input"
                       data-id="isCompleted"
                       id="checkbox2"
+                    />
+                    <div class="checkbox__box"></div>
+                  </label>
+                  <div class="inputs__note"></div>
+                </div>
+
+                <div>
+                  <label for="checkbox3" class="checkbox">
+                    Presently enrolled to above course, degree or program? ? Yes
+                    <input
+                      type="checkbox"
+                      class="checkbox__input enrolled"
+                      data-id="isEnrolled"
+                      id="checkbox3"
                     />
                     <div class="checkbox__box"></div>
                   </label>

@@ -410,7 +410,7 @@ const initForm = () => {
     }
 
     if (e.target.closest(".button__submit")) {
-      if (validateInputs() === 0) {
+      if (!validateInputs() === 0) {
         window.alert("Please fill-out all required fields");
         return;
       }

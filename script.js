@@ -198,11 +198,11 @@ const loadData = () => {
   });
 };
 
-const getPosition = async () => {
-  return new Promise(function (resolve, reject) {
-    navigator.geolocation.getCurrentPosition(resolve, reject);
-  });
-};
+// const getPosition = async () => {
+//   return new Promise(function (resolve, reject) {
+//     navigator.geolocation.getCurrentPosition(resolve, reject);
+//   });
+// };
 
 const submitResponse = async () => {
   const button = document.querySelector(".button__submit");
@@ -210,27 +210,21 @@ const submitResponse = async () => {
   button.disabled = true;
 
   try {
-    const position = await getPosition();
-    const location = `${position.coords.latitude},${position.coords.longitude}`;
+    // const position = await getPosition();
+    // const location = `${position.coords.latitude},${position.coords.longitude}`;
 
     const formData = new FormData();
 
-    formData.append(
-      "data",
-      JSON.stringify({
-        content: revUpQuestionaire,
-        location: location,
-      })
-    );
+    formData.append("data", JSON.stringify(revUpQuestionaire));
 
-    const url = `https://script.google.com/macros/s/AKfycbwDwPiO31Ilq1HhbtYstP6couLV8zKx1ifxs9iLviBmlE8X2BBVEDAeVI2wbOmWG36ggA/exec`;
+    const url = `https://script.google.com/macros/s/AKfycbzeksEOrAwFn59ew0Ai6HYmUUXAwAFcDbwqG0XJorcOVGiPuB6pdns0IkNdvp2i3OEodQ/exec`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
     });
 
     const content = await response.json();
-    console.log(JSON.parse(content.data));
+    console.log(content);
   } catch (err) {
     console.log(err.message);
   } finally {
@@ -275,7 +269,7 @@ const initForm = () => {
   //ADD OPTIONS TO YEAR
   const optionsYear = document.querySelectorAll(".inputs__select.year");
   const years = Array.from(
-    { length: 15 },
+    { length: 50 },
     (_, i) => new Date().getFullYear() - i
   );
   addOptions(optionsYear, years);
@@ -446,15 +440,13 @@ const initForm = () => {
       }
 
       if (dataId === "mobileNumber") {
-        format = /(^0[1-9])(\d{4})(\d{4}$)/;
+        format = /(^0[1-9]{3})(\d{3})(\d{3}$)/;
 
         if (format.test(trimValue(el.value))) {
           el.classList.remove("input--error");
           el.value = trimValue(el.value).toString().replace(format, "$1 $2 $3");
         } else {
-          window.alert(
-            "Please enter the two-digit area code + the eight-digit mobile number"
-          );
+          window.alert("Please enter a ten-digit mobile number");
           el.classList.add("input--error");
         }
         return;
@@ -480,8 +472,6 @@ const initForm = () => {
         window.alert("This information is required");
         el.classList.add("input--error");
       }
-
-      console.log(!document.querySelector(".test"));
     }
   });
 

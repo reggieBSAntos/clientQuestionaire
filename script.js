@@ -417,6 +417,11 @@ const initForm = () => {
         return;
       }
 
+      if (document.querySelector(".input--error")) {
+        window.alert("Please fill-out all required fields properly");
+        return;
+      }
+
       //POST HERE
       saveConfirmed();
       // submitResponse();

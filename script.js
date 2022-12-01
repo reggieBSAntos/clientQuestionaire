@@ -424,7 +424,7 @@ const initForm = () => {
 
       //POST HERE
       saveConfirmed();
-      // submitResponse();
+      submitResponse();
     }
   });
 

@@ -23,7 +23,8 @@
 
     <link rel="stylesheet" href="stylesheet.css" />
     <script defer src="script.js"></script>
-    <title>Document</title>
+
+    <title>Rev-Up Client Questionnaire</title>
   </head>
   <body>
     <div class="spinner spinner--hidden"></div>
@@ -761,7 +762,6 @@
                     class="inputs__input full"
                     placeholder="Course, degree or program"
                     data-id="courseDegree"
-                    required
                   />
                   <div class="inputs__note"></div>
                 </div>
@@ -782,7 +782,8 @@
 
                 <div>
                   <label for="checkbox3" class="checkbox">
-                    Currently enrolled to above course, degree or program? ? Yes
+                    Currently enrolled in the above course, degree or program?
+                    Yes
                     <input
                       type="checkbox"
                       class="checkbox__input enrolled"
@@ -797,12 +798,12 @@
                 <div>
                   <input
                     class="inputs__input full"
-                    placeholder="School, univeristy or institution name"
+                    placeholder="School, university or institution name"
                     data-id="schoolUniversity"
-                    required
                   />
                   <div class="inputs__note"></div>
                 </div>
+
                 <div>
                   <input
                     class="inputs__input full"
@@ -824,19 +825,11 @@
                 <div class="sub-question">
                   <div class="inputs__label full">Start date:</div>
                   <div class="dates">
-                    <select
-                      class="inputs__select month small"
-                      data-id="month"
-                      required
-                    >
+                    <select class="inputs__select month small" data-id="month">
                       <option value="" disabled selected>month</option>
                     </select>
 
-                    <select
-                      class="inputs__select year small"
-                      data-id="year"
-                      required
-                    >
+                    <select class="inputs__select year small" data-id="year">
                       <option value="" disabled selected>year</option>
                     </select>
                   </div>
@@ -848,16 +841,11 @@
                     <select
                       class="inputs__select month small"
                       data-id="monthTo"
-                      required
                     >
                       <option value="" disabled selected>month</option>
                     </select>
 
-                    <select
-                      class="inputs__select year small"
-                      data-id="yearTo"
-                      required
-                    >
+                    <select class="inputs__select year small" data-id="yearTo">
                       <option value="" disabled selected>year</option>
                     </select>
                   </div>

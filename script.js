@@ -252,7 +252,6 @@ const initForm = () => {
   const bottomBarCancel = bottombar.querySelector(".bottombar__cancel");
   const saveConfirmed = () => {
     revUpQuestionaire = getNewResponse();
-    console.log(revUpQuestionaire);
 
     localStorage.setItem(
       "revUpQuestionaire",
@@ -274,6 +273,26 @@ const initForm = () => {
         return acc + 0;
       }
     }, 0);
+  };
+
+  const toggleDateHired = (el) => {
+    const isChecked = el.closest(".checkbox").querySelector("input").checked;
+
+    const selects = el
+      .closest(".inputs")
+      .querySelectorAll(".dates")[1]
+      .querySelectorAll("select");
+
+    Array.from(selects).forEach((el) => {
+      el.disabled = isChecked;
+      if (isChecked) {
+        el.options[0].selected = true;
+        // REMOVE REQUIRED ATTRIBUTE IF CURRENT EMPLOYER
+        el.required = false;
+      } else {
+        el.required = true;
+      }
+    });
   };
 
   //ADD OPTIONS TO YEAR
@@ -308,26 +327,10 @@ const initForm = () => {
     // CHANGE VALUE TO DEFAULT
 
     // DISABLE END DATE OPTIONS
-    if (e.target.closest(".currentemployer") || e.target.closest(".enrolled")) {
-      const isChecked = e.target
-        .closest(".checkbox")
-        .querySelector("input").checked;
+    if (e.target.closest(".currentemployer")) {
+      const el = e.target;
 
-      const selects = e.target
-        .closest(".inputs")
-        .querySelectorAll(".dates")[1]
-        .querySelectorAll("select");
-
-      Array.from(selects).forEach((el) => {
-        el.disabled = isChecked;
-        if (isChecked) {
-          el.options[0].selected = true;
-          // REMOVE REQUIRED ATTRIBUTE IF CURRENT EMPLOYER
-          el.required = false;
-        } else {
-          el.required = true;
-        }
-      });
+      toggleDateHired(el);
 
       return;
     }
@@ -396,7 +399,6 @@ const initForm = () => {
         .querySelectorAll("input, textarea, select");
 
       Array.from(inputs).forEach((input) => {
-        console.log(input.type);
         if (input.type === "checkbox") {
           input.checked = false;
         } else {
@@ -417,7 +419,7 @@ const initForm = () => {
 
       //POST HERE
       saveConfirmed();
-      submitResponse();
+      // submitResponse();
     }
   });
 
@@ -515,7 +517,10 @@ const initForm = () => {
     revUpQuestionaire = JSON.parse(localStorage.getItem("revUpQuestionaire"));
     loadData();
   }
+
+  Array.from(document.querySelectorAll(".currentemployer")).forEach((el) => {
+    toggleDateHired(el);
+  });
 };
 
 document.addEventListener("DOMContentLoaded", initForm);
-// const { latitude: lat, longitude: lng } = position.coords;

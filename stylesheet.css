@@ -12,6 +12,7 @@
   --color-gray-light-50: #ececec;
   --color-gray-light-25: #e2e2e2;
   --color-gray-light-20: #e1e1e1;
+  --color-gray-light-10: #dddddd;
   --color-gray: #d9d9d9;
 
   --color-blue: #0b3c5d;
@@ -90,20 +91,20 @@ textarea:focus {
 
 input:not([type="checkbox"])::placeholder,
 textarea::placeholder {
-  font-weight: 300;
-  color: var(--color-gray-light-20);
+  font-weight: 400;
+  color: var(--color-gray-light-10);
 }
 
 input:not([type="checkbox"]):-ms-input-placeholder,
 textarea:-ms-input-placeholder {
-  font-weight: 300;
-  color: #e2e2e2;
+  font-weight: 400;
+  color: var(--color-gray-light-10);
 }
 
 input:not([type="checkbox"])::-ms-input-placeholder,
 textarea::-ms-input-placeholder {
-  font-weight: 300;
-  color: #e2e2e2;
+  font-weight: 400;
+  color: var(--color-gray-light-10);
 }
 
 /* input:not([type="checkbox"]):hover::placeholder,

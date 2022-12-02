@@ -221,7 +221,7 @@ const submitResponse = async () => {
 
     formData.append("data", JSON.stringify(revUpQuestionaire));
 
-    const url = `https://script.google.com/macros/s/AKfycbybdjsILWYeraipBcvOc_oBUORNRCi3O6R05jp7G58leGVy7UvQOWMBqhPSKMkCmD_9/exec`;
+    const url = `https://script.google.com/macros/s/AKfycbxGkp-bLNSjDesRCBU6rAaYMYNlNFBUKaeBLndf6q-KTRDM5sNbkWWXSw2V79Y3JAtpNA/exec`;
     const response = await fetch(url, {
       method: "POST",
       body: formData,
